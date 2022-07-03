@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/stock_sim_env
+*.env
+/stock_sim.pyproj
+/stock_sim.sln
