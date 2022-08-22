@@ -44,6 +44,7 @@
     <meta name="theme-color" content="#ffffff">
     <script src="{% static '/js/config.js' %}"></script>
     <script src="{% static '/js/OverlayScrollbars.min.js' %}"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static '/img/favicon-96.png' %}" />
 
     <!-- ===============================================-->
     <!--    Stylesheets-->
@@ -94,6 +95,8 @@
                 <!-- Navbar -->
                 {% include 'main/includes/navbar.html' %}
 
+                {% include 'main/includes/messages.html' %}
+
                 <script>
                     var navbarPosition = localStorage.getItem('navbarPosition');
                     var navbarVertical = document.querySelector('.navbar-vertical');
@@ -114,7 +117,7 @@
                         navbarVertical.removeAttribute('style');
                         navbarTopVertical.removeAttribute('style');
                         navbarTop.remove(navbarTop);
-                        navbarTopCombo.remove(navbarTopCombo);
+                        //navbarTopCombo.remove(navbarTopCombo);
                     }
                 </script>
 
@@ -143,7 +146,6 @@
             integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k="
             crossorigin="anonymous"></script>
 
-    <script src="{% static '/js/sb-admin-2.min.js' %}"></script>
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
@@ -152,11 +154,12 @@
     <!--    JavaScripts-->
     <!-- ===============================================-->
     <script src="{% static 'js/anchor.min.js' %}"></script>
-    <script src="{% static 'js/is.min.js"></script>
+    <script src="{% static 'js/is.min.js' %}"></script>
     <script src="{% static 'js/echarts.min.js' %}"></script>
     <script src="{% static 'js/lodash.min.js' %}"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <!--<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>-->
     <script src="{% static 'js/list.min.js' %}"></script>
     <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/countUp.umd.js' %}"></script>
 </body>
 </html>

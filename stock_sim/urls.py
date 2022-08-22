@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path,include
 from django.views.generic.base import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
+from main.views import stock_stream
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main.urls')),
+    path('', include('main.urls', namespace='main')),
     path('password_reset/done/', 
          auth_views.PasswordResetDoneView.as_view(template_name='main/password/password_reset_done.html'), 
          name='password_reset_done'),
@@ -30,4 +33,10 @@ urlpatterns = [
     path('reset/done/', 
          auth_views.PasswordResetCompleteView.as_view(template_name='main/password/password_reset_complete.html'), 
          name='password_reset_complete'),
+    path('get/ajax/stock', stock_stream, name="stock_stream"),
 ]
+
+handler404 = "main.views.error_404_view"
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

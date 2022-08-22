@@ -1,0 +1,220 @@
+{% block content %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<div class="row align-items-center g-0">
+    <div class="col light">
+        <h4 class="text-white mb-0">{{daily_data.long_name}}: <span id="market-price" class="opacity-50" data-countup='{"endValue":{{ stock.regular_market_price | floatformat:2 }},"decimalPlaces":2,"prefix":"USD ","duration":2}'>{{stock.regular_market_price | floatformat:2}} USD</span></h4>
+        <p class="fs--1 fw-semi-bold text-white"><span id="ticker" style="text-transform: uppercase">{{stock.ticker}}</span></p>
+        <p class="fs--1 fw-semi-bold text-white">
+            <script type="text/javascript">
+                function getCookie(c_name) {
+                    if (document.cookie.length > 0) {
+                        c_start = document.cookie.indexOf(c_name + "=");
+                        if (c_start != -1) {
+                            c_start = c_start + c_name.length + 1;
+                            c_end = document.cookie.indexOf(";", c_start);
+                            if (c_end == -1) c_end = document.cookie.length;
+                            return unescape(document.cookie.substring(c_start, c_end));
+                        }
+                    }
+                }
+
+                function priceStream() {
+                    var ticker = "{{stock.ticker}}"
+
+                    $.ajax({
+                        url: "{% url 'stock_stream' %}",
+                        type: 'POST',
+                        data: { "ticker": ticker },
+                        dataType: 'json',
+                        headers: { "X-CSRFToken": getCookie('csrftoken') },
+                        success: function (response) {
+                            var instance = JSON.parse(response["instance"]);
+                            var fields = instance[0]["fields"];
+                            var marketPrice = $("#market-price");
+                            var lastPriceUpdate = $("#last-price-update");
+                            var lastDailyUpdate = $("#last-daily-update");
+
+                            var newPrice = fields["regular_market_price"];
+                            var dailyDate = new Date(fields["last_daily_update"]);
+                            var updateDate = new Date(fields["last_price_update"]);
+
+                            const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' };
+
+                            marketPrice.text("USD " + Math.round((newPrice + Number.EPSILON) * 100) / 100);
+                            lastPriceUpdate.text(updateDate.toLocaleString('{{LANGUAGE_CODE}}', options));
+                            lastDailyUpdate.text(dailyDate.toLocaleString('{{LANGUAGE_CODE}}', options));
+ 
+                        },
+                        error: function (response) {
+                                
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+                    var frequency = 15; //seconds
+                    var run_time = 60 * 60; // 60s/min * 6min/hr = 1hr
+                    var startTime = new Date().getTime();
+                    priceStream();
+                    var interval = setInterval(function () {
+                        if (new Date().getTime() - startTime > run_time * 1000) {
+                            clearInterval(interval);
+                            return;
+                        }
+                        priceStream()
+                    }, frequency * 1000);
+                    
+                })
+            </script>
+        </p>
+    </div>
+    <div class="col-auto d-none d-sm-block">
+        <select class="form-select form-select-sm mb-3" id="dashboard-chart-select">
+            <option value="all" onclick="changeData(0)">all</option>
+            <option value="5yr" onclick="changeData(1)">5 years</option>
+            <option value="2yr" onclick="changeData(2)">2 years</option>
+            <option value="1yr" onclick="changeData(3)">1 year</option>
+            <option value="ytd" onclick="changeData(4)">ytd</option>
+            <option value="6mo" onclick="changeData(5)">6 months</option>
+            <option value="3mo" onclick="changeData(6)">3 months</option>
+            <option value="1mo" onclick="changeData(7)" selected="selected">1 month</option>
+            <option value="5day" onclick="changeData(8)">5 day</option>
+            <option value="1day" onclick="changeData(9)">1 day</option>
+        </select>
+    </div>
+</div>
+<div style="width: 855px; height: 200px; user-select: none; padding: 0px; margin: 0px; border-width: 0px;">
+    <canvas id="stockDetailArea"></canvas>
+    <script>
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.color = '#b6c1d2';
+        Chart.defaults.font.family = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+
+        var dataObjects = {{ stock.history_data | safe }};
+
+        var defaultLabels = [];
+        dataObjects[7].data.forEach(function (data) { defaultLabels.push(data.x); });
+
+        // Area Chart Example
+        var ctx = document.getElementById("stockDetailArea").getContext('2d');
+        var fillGradient = ctx.createLinearGradient(0, 0, 0, 175);
+        fillGradient.addColorStop(0, 'rgba(44,123,229,0.5)');
+        fillGradient.addColorStop(1, 'rgba(44,123,229,0)');
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: defaultLabels,
+                datasets: [{
+                    fill: 'origin',
+                    label: dataObjects[7].label,
+                    lineTension: 0.3,
+                    backgroundColor: fillGradient,
+                    borderColor: "#2c7be5",
+                    borderWidth: 2,
+                    pointRadius: 2,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#2c7be5",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "#2c7be5",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 1,
+                    data: dataObjects[7].data,
+                    parsing: {
+                        yAxisKey: 'c',
+                    }
+                }],
+            },
+            options: {
+                locale: 'en-US',
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            tickColor: "rgba(255,255,255,0.1)",
+                            tickLength: 10,
+                            drawBorder: true,
+                            borderColor: "rgba(255,255,255,0.1)",
+                            color: "rgba(255,255,255,0.1)",
+                        },
+                        ticks: {
+
+                        },
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            display: false,
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: "#0b1727",
+                        bodyColor: "#fff",
+                        titleMarginBottom: 10,
+                        titleColor: "#fff",
+                        titleFont: {
+                            size: 14,
+                        },
+                        borderColor: "#344050",
+                        borderWidth: 1,
+                        xPadding: 7,
+                        yPadding: 10,
+                        displayColors: false,
+                        intersect: false,
+                        mode: 'index',
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        );
+
+        function changeData(index) {
+            myLineChart.data.datasets.forEach(function (dataset) {
+                dataset.label = dataObjects[index].label;
+                dataset.data = dataObjects[index].data;
+                var labelsList = [];
+                dataObjects[index].data.forEach(function (data) {
+                    labelsList.push(data.x);
+                });
+                myLineChart.data.labels = labelsList;
+            });
+            myLineChart.update();
+        }
+
+    </script>
+</div>
+
+
+{% endblock %}

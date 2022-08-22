@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <!-- Font Awesome Free -->
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"
+            integrity="sha256-cHVO4dqZfamRhWD7s4iXyaXWVK10odD+qp4xidFzqTI="
+            crossorigin="anonymous"></script>
+
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Stock Simulator</title>
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <meta name="theme-color" content="#ffffff">
+    <script src="{% static '/js/config.js' %}"></script>
+    <script src="{% static '/js/OverlayScrollbars.min.js' %}"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static '/img/favicon-96.png' %}" />
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    <link href="{% static '/css/OverlayScrollbars.min.css' %}" rel="stylesheet">
+    <link href="{% static '/css/theme-rtl.min.css' %}" rel="stylesheet" id="style-rtl">
+    <link href="{% static '/css/main.css' %}" rel="stylesheet" id="style-default" type="text/css">
+    <link href="{% static '/css/user-rtl.min.css' %}" rel="stylesheet" id="user-style-rtl">
+    <link href="{% static '/css/user.min.css' %}" rel="stylesheet" id="user-style-default">
+</head>
+<body>
+
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+        <div class="container" data-layout="container">
+            <script>
+                var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+                if (isFluid) {
+                    var container = document.querySelector('[data-layout]');
+                    container.classList.remove('container');
+                    container.classList.add('container-fluid');
+                }
+            </script>
+            <div class="row flex-center min-vh-100 py-6 text-center">
+                <div class="col-sm-10 col-md-8 col-lg-6 col-xxl-5">
+                    <a class="d-flex flex-center mb-4" href="/" style="font-size: 2.48832rem !important;">
+                        <span class="font-sans-serif logo logo-1 bg-gradient bg-primary">Stock|</span><span class="logo logo-2 bg-gradient bg-info"> Sim</span>
+                    </a>
+                    <div class="card">
+                        <div class="card-body p-4 p-sm-5">
+                            <div class="fw-black lh-1 text-300 fs-error">404</div>
+                            <p class="lead mt-4 text-800 font-sans-serif fw-semi-bold w-md-75 w-xl-100 mx-auto">The page you're looking for is not found.</p>
+                            <hr />
+                            <p>Make sure the address is correct and that the page hasn't moved. If you think this is a mistake, <a href="mailto:info@exmaple.com">contact us</a>.</p><a class="btn btn-primary btn-sm mt-3" href="/"><span class="fas fa-home me-2"></span>Take me home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main><!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+    <!-- Bootstrap Javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    <script src="{% static 'js/anchor.min.js' %}"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+</body>
+</html>

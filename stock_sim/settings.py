@@ -15,15 +15,29 @@ from getpass import getpass
 import dotenv
 import os, sys
 from django.contrib.messages import constants as messages
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+
+# Hide secret information in dotenv file
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
+
+# SQLAlchemy Database Connection
+# DB_CONNECTION_URL = os.environ['ENGINE_DB_PATH'] <- Old SQLAlchemy DB Connection. Below connection url should bridge better between Django ORM and SQLA.
+DB_CONNECTION_URL = os.environ['DB_ENGINE'].split(".")[-1].replace("_", "+") \
+    + "://" + os.environ['DB_USER'] + ":" + os.environ['DB_PASSWORD'] + "@" \
+    + os.environ['DB_HOST'] + "/" + os.environ['DB_NAME']
+ENGINE = create_engine(DB_CONNECTION_URL)
+SESSION = sessionmaker(bind=ENGINE)
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -35,7 +49,9 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost',
+                 '127.0.0.1',
+                 '.ngrok.io']
 
 
 # Application definition
@@ -54,11 +70,6 @@ INSTALLED_APPS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'stock_sim/static')
-    ]
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
@@ -76,6 +87,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'main.middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'stock_sim.urls'
@@ -91,6 +103,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.stocks',
             ],
         },
     },
@@ -145,13 +158,22 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = str(BASE_DIR) + '\static'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'stock_sim/static')
+    ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = str(BASE_DIR) + '\media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

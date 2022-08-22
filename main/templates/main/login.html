@@ -22,7 +22,7 @@
                     <div class="col-auto">
                         <h5>Log in</h5>
                     </div>
-                    <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a href="/register">Create an account</a></span></div>
+                    <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a href="{% url 'main:register' %}">Create an account</a></span></div>
                 </div>
                 <form method="POST">
                     <div class="mb-3">
@@ -33,7 +33,7 @@
                         <div class="col-auto">
                             <div class="form-check mb-0"><input class="form-check-input" type="checkbox" id="basic-checkbox" checked="checked" /><label class="form-check-label mb-0" for="basic-checkbox">Remember me</label></div>
                         </div>
-                        <div class="col-auto"><a class="fs--1" href="/password_reset">Forgot Password?</a></div>
+                        <div class="col-auto"><a class="fs--1" href="{% url 'main:password_reset'%}">Forgot Password?</a></div>
                     </div>
                     <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit">Log in</button></div>
                 </form>

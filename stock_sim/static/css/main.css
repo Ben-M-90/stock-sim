@@ -29851,3 +29851,20 @@ div[data-collapse] + .kanban-item, .draggable--original:first-child + .kanban-it
 .border-left-danger {
     border-left: solid var(--falcon-danger) !important;
 }
+
+.logo-1 {
+    font-weight: 100;
+}
+
+.logo-2 {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.logo {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    font-family: var(--falcon-body-font-family) !important;
+}

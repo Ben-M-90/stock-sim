@@ -3,16 +3,18 @@
 <!-- SIDEBAR INCLUDE -->
 <nav class="navbar navbar-light navbar-glass navbar-vertical navbar-expand-xl" style="display: none;">
     <script>
-                    var navbarStyle = localStorage.getItem("navbarStyle");
-                    if (navbarStyle && navbarStyle !== 'transparent') {
-                        document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
-                    }
+        var navbarStyle = localStorage.getItem("navbarStyle");
+        if (navbarStyle && navbarStyle !== 'transparent') {
+            document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
+        }
     </script>
     <div class="d-flex align-items-center">
         <div class="toggle-icon-wrapper">
             <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
         </div><a class="navbar-brand" href="/">
-            <div class="d-flex align-items-center py-3"><i class="fa-solid fa-chart-area"></i><span class="font-sans-serif"> Stock Sim</span></div>
+            <div class="d-flex align-items-center py-3">
+                <span class="font-sans-serif logo logo-1 bg-gradient bg-primary">Stock|</span><span class="logo logo-2 bg-gradient bg-info"> Sim</span>
+            </div>
         </a>
     </div>
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
@@ -228,7 +230,20 @@
     </div>
 </nav>
 
+
 <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand-xl" style="display: none;">
     
 </nav>
 <!-- End of SIDEBAR INCLUDE -->
+
+
+
+<nav class="navbar navbar-light navbar-glass navbar-vertical navbar-expand-xl" style="display: none;">
+    <div class="d-flex align-items-center">
+        <div class="toggle-icon-wrapper">
+            <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+        </div><a class="navbar-brand" href="/">
+            <div class="d-flex align-items-center py-3"><i class="fa-solid fa-chart-area"></i><span class="font-sans-serif"> Stock Sim</span></div>
+        </a>
+    </div>
+</nav>
