@@ -2,25 +2,18 @@ from cmath import nan
 from lib2to3.pgen2.token import NAME
 from re import I
 from tkinter import Entry
+from types import NoneType
 import yfinance as yf
 import pandas as pd
 import sqlalchemy
 from sqlalchemy import Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.automap import automap_base
-from stock_sim.settings import ENGINE as eng
-from stock_sim.settings import SESSION as Session
 import datetime
 import pytz
 import math
 
-# Setup SQLAlchemy to connect to existing database created by Django ORM (e.g. Django migrations of models)
-Base_Dec = declarative_base()
-Base_Auto = automap_base()
-Base_Auto.prepare(eng, reflect=True)
 
-class StockDataTable(Base_Dec): # SQLAlchemy connection to StockData table created in Django 'main' app
-	__table__ = sqlalchemy.Table('main_stock', Base_Dec.metadata, autoload=True, autoload_with=eng)
 
 ### Functions for gettings lists of tickers
 
@@ -48,8 +41,6 @@ def all_tickers_set(sp500=True, nasdaq=True, dow=True, other=True) -> set:
 		other_set = set(symbol for symbol in pd.DataFrame(si.tickers_other())[0].values.tolist())
 		all_tickers.update(other_set)
 
-	#all_tickers = set.union(sp500_set, nasdaq_set, dow_set, other_set)
-
 	delinquent_char_list = ['W', 'R', 'P', 'Q']
 
 	return_set = set()
@@ -64,19 +55,7 @@ def all_tickers_set(sp500=True, nasdaq=True, dow=True, other=True) -> set:
 			symbol = symbol[0:4]
 			return_set.add(symbol)
 
-	print("Tickers in set - " + str(len(return_set)))
 	return return_set
-
-def stock_set_from_table():
-	'''
-	Get set of tickers out of existing Django database.
-	'''
-	session = Session()
-	StockTable = Base_Auto.classes.main_stock
-	stock_set = set()
-	for stock in session.query(StockTable.ticker):
-		stock_set.add(stock._data[0])
-	return stock_set
 
 def ticker_set_to_string(ticker_set):
 	'''
@@ -90,36 +69,10 @@ def ticker_set_to_string(ticker_set):
 	if all_ticker_string[-1] == " ":
 		all_ticker_string[-1].strip()
 
-	return all_ticker_string	
+	return all_ticker_string
 
 
 ## Functions for getting stock data
-
-def get_data(stock_object):
-		try:
-			yf_stock = yf.Ticker(stock_object.ticker)
-				
-			stock_object.business_summary = yf_stock.info['longBusinessSummary']
-			stock_object.long_name = yf_stock.info['longName']
-			stock_object.city = yf_stock.info['city']
-			stock_object.state = yf_stock.info['state']
-			stock_object.country = yf_stock.info['country']
-			stock_object.website = yf_stock.info['website']
-			stock_object.logo_url = yf_stock.info['logo_url']
-			stock_object.industry = yf_stock.info['industry']
-
-			stock_object.currency_unit = yf_stock.info['financialCurrency']
-			stock_object.current_price = yf_stock.info['currentPrice']
-			stock_object.regular_market_price = yf_stock.info['regularMarketPrice']
-			stock_object.regular_market_open = yf_stock.info['regularMarketOpen']
-			stock_object.regular_market_day_high = yf_stock.info['regularMarketDayHigh']
-			stock_object.regular_market_previous_close = yf_stock.info['regularMarketPreviousClose']
-			stock_object.pre_market_price = yf_stock.info['preMarketPrice']
-			stock_object.day_low = yf_stock.info['dayLow']
-			stock_object.fifty_day_average = yf_stock.info['fiftyDayAverage']
-			stock_object.two_hundred_day_average = yf_stock.info['twoHundredDayAverage']
-		except:
-			pass
 
 def get_price(ticker):
 	'''
@@ -130,42 +83,15 @@ def get_price(ticker):
 
 	ticker_url = "{}/{}".format(base._SCRAPE_URL_, ticker)
 
-	try:
-		regularMarketPrice = yf_utils.get_json(ticker_url).get('price', {}).get('regularMarketPrice')
-		return regularMarketPrice
-	except Exception:
-		pass
+	regularMarketPrice = yf_utils.get_json(ticker_url).get('price', {}).get('regularMarketPrice')
+	return regularMarketPrice
 
-def bulk_download_history_from_set(stock_set, 
-						   period="1mo", 
-						   interval="1d", 
-						   group_by="ticker",
-						   auto_adjust=True,
-						   prepost=False,
-						   threads=True,
-						   proxy=None):
-	ticker_string = ticker_set_to_string(stock_set)
-
-	history_data = yf.download(ticker_string, 
-					period=period, 
-					interval=interval, 
-					group_by=group_by, 
-					auto_adjust=auto_adjust, 
-					prepost=prepost, 
-					threads=threads, 
-					proxy=proxy)
-
-	return history_data
-	
-def bulk_get_ticker_data_from_set(stock_set):
-	ticker_string = ticker_set_to_string(stock_set)
-	ticker_data = yf.Tickers(ticker_string)
-
-	return ticker_data
-
-def ticker_to_dict(ticker_data):
-	if ticker_data.analysis is not None:
-		info = ticker_data.info
+def ticker_to_dict(yfinance_ticker):
+	'''
+	Convert yfinance ticker to dictionary of data.
+	'''
+	if yfinance_ticker.analysis is not None:
+		info = yfinance_ticker.info
 
 		try:
 			state = info["state"]
@@ -190,11 +116,17 @@ def ticker_to_dict(ticker_data):
 					"day_low": info["dayLow"],
 					"_fifty_day_average": info["fiftyDayAverage"],
 					"_two_hundred_day_average": info["twoHundredDayAverage"],
-					"history_data": histories_json(ticker_data)
+					"history_data": histories_json(yfinance_ticker)
 					}
+
+		if type(ticker_dict) == NoneType:
+			return None
 		return ticker_dict
 
 def histories_json(ticker):
+	'''
+	Return Json serialized history data for given yfinance ticker.
+	'''
 	history_dataframes = { 
 	"all": ticker.history(period="max", interval="1wk"),
 	"5 years": ticker.history(period="5y", interval="1wk"),
@@ -235,9 +167,6 @@ def histories_json(ticker):
 				"l": row['Low'], 
 				"c": row['Close'], 
 				"v": row['Volume']})
-
-
-			
 
 		data_object.append({"label": dataframe, "data": compiled_list})
 
