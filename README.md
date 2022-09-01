@@ -126,7 +126,7 @@ Before beginning setup, it is recommended to [https://docs.python.org/3/tutorial
 * ENGINE_DB_PATH, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, and DB_PORT are values set during SQL database creation.
 * See [https://docs.djangoproject.com/en/4.1/ref/databases/](Django database documentation) for more information.
 * A Django Secret Key can be generated online. Simply copy and paste for DJANGO_SECRET_KEY.
-    '''
+    ```
     # .env
 
     ENGINE_DB_PATH = "postgresql+psycopg2://postgres:PASSWORD@localhost:5432/DATABASE_NAME"
@@ -138,11 +138,11 @@ Before beginning setup, it is recommended to [https://docs.python.org/3/tutorial
     DB_PASSWORD = ""
     DB_HOST = "127.0.0.1"
     DB_PORT = "5432"
-    '''
+    ```
 7. Run the Django localserver in your terminal. Note that the shortcut py may not work on all systems and is dependent on how your local Python installation is configured.
-    '''sh
+    ```sh
     py manage.py runserver
-    '''
+    ```
 8. Navigate to localhost:8000 in your web browser.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
