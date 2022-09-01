@@ -37,13 +37,11 @@
 <!-- <h3 align="center">project_title</h3> -->
 
   <p align="center">
-    project_description
+    Practice trading strategies in a risk free environment.
     <br />
     <a href="https://github.com/ben-m-90/stock_sim"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ben-m-90/stock_sim">View Demo</a>
-    ·
     <a href="https://github.com/ben-m-90/stock_sim/issues">Report Bug</a>
     ·
     <a href="https://github.com/ben-m-90/stock_sim/issues">Request Feature</a>
@@ -85,7 +83,9 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Django web app which scrapes live stock market data and allows users to buy & sell stocks to test their trading strategies in a risk-free environment. Data is stored to SQL database with updates made just in time when user views page requiring data and only if data hasn’t been updated recently to reduce database demand.
+* User account system. Users can create stock portfolios with whatever initial balance they want. Test how you would do with $1,000,000 or challenge yourself with $50.
+* Data is scraped from Yahoo Finance. Prices are updated on demand (only when a user is viewing an element that requires displaying the price) and other data is updated on demand every hour.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -93,12 +93,6 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
