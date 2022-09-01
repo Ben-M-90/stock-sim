@@ -111,13 +111,12 @@ Before beginning setup, it is recommended to [https://docs.python.org/3/tutorial
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
     ```sh
     git clone https://github.com/ben-m-90/stock_sim.git
     ```
-3. Navigate your terminal to the local storage location created in Step 2.
-4. Install packages from requirements.txt
+2. Navigate your terminal to the local storage location created in Step 2.
+3. Install packages from requirements.txt
     ```sh
     pip install -r requirements.txt
     ```
