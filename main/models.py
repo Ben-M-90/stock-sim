@@ -155,7 +155,7 @@ class StockPortfolio(models.Model):
     name = models.CharField(max_length=30, null=False)
     created_date = models.DateTimeField(auto_now_add=True)
     balance = models.DecimalField(max_digits=19, decimal_places=8, null=False)
-    start_balance = models.DecimalField(max_digits=19, decimal_places=8, null=True)
+    start_balance = models.DecimalField(max_digits=19, decimal_places=8, null=True, validators=[MinValueValidator(round(Decimal(0.001), 3))])
     description = models.TextField(max_length=500, null=True, blank=True)
 
     class Meta:
@@ -209,7 +209,7 @@ class Trade(models.Model):
         stock_current_price = self.stock.regular_market_price
         return (stock_current_price - self.purchase_price)*self.quantity
 
-    def sell_stock(self, sell_quantity, commit=True):
+    def sell_stock(self, sell_quantity):
         if sell_quantity > self.quantity or sell_quantity <= 0:
             raise ValueError()
         elif sell_quantity == self.quantity:

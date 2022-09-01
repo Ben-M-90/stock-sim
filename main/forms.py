@@ -1,6 +1,4 @@
-from multiprocessing import Value
 from pickle import TRUE
-from re import U
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm, PasswordChangeForm
 from .models import CustomUser, UserProfile, StockPortfolio, Trade
 from django import forms

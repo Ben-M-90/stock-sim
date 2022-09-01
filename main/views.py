@@ -1,6 +1,4 @@
 # main/views.py
-import re
-from typing import Type
 from .forms import CustomUserCreationForm, CustomPasswordResetForm, EditProfileForm, \
 	EditUserForm, CustomPasswordChangeForm, ProfilePictureForm, NewPortfolioForm, \
 	PortfolioForm, BuyStockForm, SellStockForm
@@ -21,8 +19,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from finance_data_manager import stock_manager
 import yfinance as yf
-import datetime
-import decimal
 
 
 def homepage(request):
@@ -98,7 +94,7 @@ def password_reset_request(request):
 						send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
 					except BadHeaderError:
 						return HttpResponse('Invalid header found.')
-					messages.success(request, f"Reset password e-mail has successfully been sent.")
+					messages.success(request, "Reset password e-mail has successfully been sent.")
 					return redirect ("/password_reset/done/")
 			else:
 				messages.error(request, "Invalid username or email.")
@@ -238,7 +234,6 @@ def stock_details(request, ticker):
 
 
 def stock_stream(request):
-	import json
 	if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
 		ticker = request.POST.get('ticker',None)
 

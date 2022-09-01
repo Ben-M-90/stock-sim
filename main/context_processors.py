@@ -1,4 +1,4 @@
-from .models import CustomUser, Stock
+from .models import Stock
 
 def stocks(request):
 	stocks = Stock.objects.all()

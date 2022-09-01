@@ -1,19 +1,6 @@
-from cmath import nan
-from lib2to3.pgen2.token import NAME
-from re import I
-from tkinter import Entry
 from types import NoneType
-import yfinance as yf
 import pandas as pd
-import sqlalchemy
-from sqlalchemy import Table
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.automap import automap_base
-import datetime
-import pytz
 import math
-
-
 
 ### Functions for gettings lists of tickers
 

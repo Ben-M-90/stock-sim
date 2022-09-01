@@ -13,10 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from getpass import getpass
 import dotenv
-import os, sys
+import os
 from django.contrib.messages import constants as messages
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 
 
@@ -29,14 +27,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
-
-# SQLAlchemy Database Connection
-# DB_CONNECTION_URL = os.environ['ENGINE_DB_PATH'] <- Old SQLAlchemy DB Connection. Below connection url should bridge better between Django ORM and SQLA.
-DB_CONNECTION_URL = os.environ['DB_ENGINE'].split(".")[-1].replace("_", "+") \
-    + "://" + os.environ['DB_USER'] + ":" + os.environ['DB_PASSWORD'] + "@" \
-    + os.environ['DB_HOST'] + "/" + os.environ['DB_NAME']
-ENGINE = create_engine(DB_CONNECTION_URL)
-SESSION = sessionmaker(bind=ENGINE)
 
 
 
