@@ -105,32 +105,46 @@ Django web app which scrapes live stock market data and allows users to buy & se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Before beginning setup, it is recommended to [https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments](create and activate a Python virtual environment).
 
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+    ```sh
+    git clone https://github.com/ben-m-90/stock_sim.git
+    ```
+3. Navigate your terminal to the local storage location created in Step 2.
+4. Install packages from requirements.txt
+    ```sh
+    pip install -r requirements.txt
+    ```
+4. Download and install an SQL server. PostgreSQL was used to develop this project so it is recommended.
+5. Rename the file 'sample.env' to '.env'
+6. Edit '.env' using a text editor.
+* ENGINE_DB_PATH, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, and DB_PORT are values set during SQL database creation.
+* See [https://docs.djangoproject.com/en/4.1/ref/databases/](Django database documentation) for more information.
+* A Django Secret Key can be generated online. Simply copy and paste for DJANGO_SECRET_KEY.
+    '''
+    # .env
+
+    ENGINE_DB_PATH = "postgresql+psycopg2://postgres:PASSWORD@localhost:5432/DATABASE_NAME"
+    DJANGO_SECRET_KEY = 
+
+    DB_ENGINE = "django.db.backends.postgresql_psycopg2"
+    DB_NAME = ""
+    DB_USER = ""
+    DB_PASSWORD = ""
+    DB_HOST = "127.0.0.1"
+    DB_PORT = "5432"
+    '''
+7. Run the Django localserver in your terminal. Note that the shortcut py may not work on all systems and is dependent on how your local Python installation is configured.
+    '''sh
+    py manage.py runserver
+    '''
+8. Navigate to localhost:8000 in your web browser.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -139,9 +153,11 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+1. Create a new user account and log-in. E-mail verification will appear in the terminal the local server is running on.
+2. Configure user settings by clicking the profile icon at the top right of the home page and selecting 'Settings'.
+3. Create a new stock portfolio within user settings.
+4. Navigate to a stock page by going to url localhost:8000/stock_details/"TICKER"
+5. View information of the chosen stock and buy/sell the stock being viewed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -150,10 +166,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Implement initialization function to create Stock objects enmasse on startup.
+- [ ] Implement database bulk update functionality to update all stocks on a schedule rather solely on-demand.
+- [ ] Add feature to make call type trades (buy/sell at specific price)
+- [ ] Add feature(s) for highlighting trending stocks
 
 See the [open issues](https://github.com/ben-m-90/stock_sim/issues) for a full list of proposed features (and known issues).
 
@@ -191,9 +207,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/ben-m-90/stock_sim)
+Project Link: [https://github.com/ben-m-90/stock_sim](https://github.com/ben-m-90/stock_sim)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -202,9 +216,8 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* [https://djangoproject.com/](Django)
+* [https://github.com/ranaroussi/yfinance](yfinance)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
