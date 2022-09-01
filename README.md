@@ -96,7 +96,7 @@ Django web app which scrapes live stock market data and allows users to buy & se
 * [![Django][Djangoproject.com]][Django-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
-* [![PostgreSQL][PostgreSQL.org]][PostgrSQL-url]
+* [![PostgreSQL][PostgreSQL.org]][PostgreSQL-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
