@@ -93,6 +93,7 @@ Django web app which scrapes live stock market data and allows users to buy & se
 
 ### Built With
 
+* [![Django][Djangoproject.com][Django-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
@@ -239,3 +240,6 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+[Djangoproject.com]: https://img.shields.io/badge/Django-20aa76?style-for-the-badge&logo=django&logoColor=white
+[Django-url]: https://djangoproject.com
+[PostgreSQL.com]: https://img.shields.io/badge/PostgreSQL-4169E1?style-for-the-badge&logo=postgresql&logoColor=white
