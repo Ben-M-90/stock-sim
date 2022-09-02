@@ -75,3 +75,4 @@ lodash.min.js linguist-vendored
 navbar.js linguist-vendored
 OverlayScrollbars.min.js linguist-vendored
 theme.js linguist-vendored
+*.css linguist-vendored
