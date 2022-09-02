@@ -114,6 +114,11 @@ def histories_json(ticker):
 	'''
 	Return Json serialized history data for given yfinance ticker.
 	'''
+	try:
+		ticker.info["symbol"]
+	except:
+		return None
+
 	history_dataframes = { 
 	"all": ticker.history(period="max", interval="1wk"),
 	"5 years": ticker.history(period="5y", interval="1wk"),
