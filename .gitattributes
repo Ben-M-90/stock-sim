@@ -63,4 +63,17 @@
 #*.RTF   diff=astextplain
 
 # change language of repo to Python
-	*.js linguist-language=Python
+chart-area-demo.js linguist-vendored
+chart-bar-demo.js linguist-vendored
+chart-pie-demo.js linguist-vendored
+datatables-demo.js linguist-vendored
+anchor.min.js linguist-vendored
+countUp.umd.js linguist-vendored
+is.min.js linguist-vendored
+list.min.js linguist-vendored
+lodash.min.js linguist-vendored
+navbar.js linguist-vendored
+OverlayScrollbars.min.js linguist-vendored
+theme.js linguist-vendored
+*.css linguist-vendored
+*.html linguist-vendored
