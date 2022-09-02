@@ -82,6 +82,3 @@ def test_histories_json(working_yfinance_ticker, invalid_yfinance_ticker):
 
 	broken_json_data = stock_manager.histories_json(invalid_yfinance_ticker)
 	assert broken_json_data is None
-
-
-stock_manager.histories_json(yf.Ticker("NOPE"))

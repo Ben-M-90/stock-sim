@@ -115,8 +115,9 @@ def histories_json(ticker):
 	Return Json serialized history data for given yfinance ticker.
 	'''
 	try:
-		ticker.info["symbol"]
-	except:
+		if ticker.info["regularMarketPrice"] is None:
+			return None
+	except ConnectionError:
 		return None
 
 	history_dataframes = { 
